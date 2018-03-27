@@ -68,8 +68,18 @@ void get_z_array(string text, int *Z) {
 	}
 }
 
-int count_word(string text, string word) {
+int count_word(string file, string word) {
 	int count = 0;
+	string text;
+
+	// read file
+	ifstream file_in(file);
+	file_in.seekg(0, ios::end);
+	text.reserve(file_in.tellg());
+	file_in.seekg(0, ios::beg);
+	text.assign((istreambuf_iterator<char>(file_in)),
+		istreambuf_iterator<char>());
+
 	string concat =  word + "$" + text;
 	int len_concat = concat.length();
 	int len_pattern = word.length();
@@ -94,17 +104,29 @@ int count_word(string text, string word) {
  */
 /***************************************************/
 
-vector<string> get_files_from_directory(char *directory_path) {
+vector<_file_information> get_files_from_directory(char  *directory_path) {
 	DIR *dir = NULL;
 	struct dirent *file = NULL;
-	vector<string> files;
+	vector<_file_information> files;
+	char path[MAX_LENGTH];
 
 	if (dir = opendir(directory_path)) {
 		while (file = readdir(dir)) {
 			if (!file->d_name || file->d_name[0] == '.' || file->d_type == DT_DIR)
 				continue;
 
-			files.push_back(file->d_name);
+			sprintf_s(path, "%s%s", directory_path, file->d_name);
+
+			_file_information file_information;
+			strcpy_s(file_information.name, strlen(path) + 1, path);
+			file_information.size = get_size_of_file(path);
+
+			files.push_back(file_information);
+
+			sort(files.begin(), files.end(),
+				[](const _file_information& l, const _file_information& r) {
+					return l.size < r.size;
+			});
 		}
 		closedir(dir);
 	}

@@ -5,6 +5,8 @@
 #include    <mpi.h>
 #include    <dirent.h>
 #include	<vector>
+#include	<algorithm>
+#include	<fstream>
 
 using namespace std;
 
@@ -13,8 +15,9 @@ using namespace std;
  */
 
 /***************************************************/
-#define MAX_LENGTH	    512
-#define CHUCK           1024
+#define MAX_LENGTH			512
+#define CHUCK				1024
+#define MAX_SIZE_PROC		15
 
 struct _file_structure {
 	char path[MAX_LENGTH];
@@ -34,7 +37,7 @@ void free_file_structure_struct(MPI_Datatype arg);
 /***************************************************/
 
 void get_z_array(string text, int *Z);
-int count_word(string text, string word);
+int count_word(string file, string word);
 
 /***************************************************/
 
@@ -43,7 +46,12 @@ int count_word(string text, string word);
  */
 /***************************************************/
 
-vector<string> get_files_from_directory(char *directory_path);
+struct _file_information {
+	char name[MAX_LENGTH];
+	int size;
+};
+
+vector<_file_information> get_files_from_directory(char *directory_path);
 int get_size_of_file(char *path);
 
 /***************************************************/

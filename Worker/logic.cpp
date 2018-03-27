@@ -70,8 +70,18 @@ void get_z_array(string text, int *Z) {
 	}
 }
 
-int count_word(string text, string word) {
+int count_word(string file, string word) {
 	int count = 0;
+	string text;
+
+	// read file
+	ifstream file_in(file);
+	file_in.seekg(0, ios::end);
+	text.reserve(file_in.tellg());
+	file_in.seekg(0, ios::beg);
+	text.assign((istreambuf_iterator<char>(file_in)),
+		istreambuf_iterator<char>());
+
 	string concat = word + "$" + text;
 	int len_concat = concat.length();
 	int len_pattern = word.length();

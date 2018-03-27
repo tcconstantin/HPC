@@ -1,1 +1,4 @@
-﻿
+﻿  main.cpp
+d:\repo\hpc\master\main.cpp(78): warning C4018: '<': signed/unsigned mismatch
+  Master.vcxproj -> D:\Repo\HPC\Debug\Master.exe
+  Master.vcxproj -> D:\Repo\HPC\Debug\Master.pdb (Partial PDB)

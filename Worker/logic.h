@@ -3,6 +3,7 @@
 #include    <iostream>
 #include    <string>
 #include    <mpi.h>
+#include	<fstream>
 
 using namespace std;
 
@@ -31,6 +32,6 @@ void free_file_structure_struct(MPI_Datatype arg);
 /***************************************************/
 
 void get_z_array(string text, int *Z);
-int count_word(string text, string word);
+int count_word(string file, string word);
 
 /***************************************************/
